@@ -5,7 +5,7 @@ Clicker Exploit using the nRF24L01 wireless module from e-bay
 
 
 Previous research:
-- Android Code:
+- Arduino Code:
 https://code.google.com/p/taylor-killian/downloads/detail?name=answer-v1.zip
 
 - Implementation:
