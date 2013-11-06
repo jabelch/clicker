@@ -3,9 +3,16 @@
 #include "macList.h"
 #include "answer_strings.h"
 
+/* //NANO SETTINGS
 #define CSN 10
 #define CE 9
 #define IRQ 8
+*/
+
+//MEGA SETTINGS
+#define CSN 53
+#define CE 42
+#define IRQ 41
 
 #define MAX_RECORDS 150
 #define MAC_SIZE 3
