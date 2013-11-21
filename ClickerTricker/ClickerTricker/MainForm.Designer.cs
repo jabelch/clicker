@@ -59,8 +59,19 @@
             this.AnswerC = new System.Windows.Forms.RadioButton();
             this.AnswerB = new System.Windows.Forms.RadioButton();
             this.AnswerA = new System.Windows.Forms.RadioButton();
-            this.UseDefaultMAC = new System.Windows.Forms.CheckBox();
-            this.DefaultMACAddress = new System.Windows.Forms.TextBox();
+            this.UseDefaultMACCheckBox = new System.Windows.Forms.CheckBox();
+            this.DefaultMACAddressTextBox = new System.Windows.Forms.TextBox();
+            this.MACRemoveFromList = new System.Windows.Forms.Button();
+            this.JamButton = new System.Windows.Forms.Button();
+            this.ComPortToUse = new System.Windows.Forms.TextBox();
+            this.CommPortLabel = new System.Windows.Forms.Label();
+            this.warningOutputBox = new System.Windows.Forms.TextBox();
+            this.consoleTextBox = new System.Windows.Forms.TextBox();
+            this.consoleEnter = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.channelTextBox = new System.Windows.Forms.TextBox();
             this.TransOptGroupBox.SuspendLayout();
             this.AnswerGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -80,14 +91,12 @@
             this.MACListBox.CheckOnClick = true;
             this.MACListBox.FormattingEnabled = true;
             this.MACListBox.Items.AddRange(new object[] {
-            "mac1",
-            "mac2",
-            "mac3",
-            "mac4",
-            "mac5"});
+            "abcdef",
+            "bbcdef",
+            "cbcdef"});
             this.MACListBox.Location = new System.Drawing.Point(524, 141);
             this.MACListBox.Name = "MACListBox";
-            this.MACListBox.Size = new System.Drawing.Size(203, 214);
+            this.MACListBox.Size = new System.Drawing.Size(203, 409);
             this.MACListBox.TabIndex = 1;
             // 
             // label1
@@ -107,10 +116,11 @@
             this.ScanForMACs.TabIndex = 3;
             this.ScanForMACs.Text = "Scan For MACs";
             this.ScanForMACs.UseVisualStyleBackColor = true;
+            this.ScanForMACs.Click += new System.EventHandler(this.ScanForMACs_Click);
             // 
             // transmitMessage
             // 
-            this.transmitMessage.Location = new System.Drawing.Point(322, 9);
+            this.transmitMessage.Location = new System.Drawing.Point(337, 9);
             this.transmitMessage.Name = "transmitMessage";
             this.transmitMessage.Size = new System.Drawing.Size(159, 23);
             this.transmitMessage.TabIndex = 4;
@@ -122,7 +132,7 @@
             // 
             this.TransOptGroupBox.Controls.Add(this.TransOptSendSelected);
             this.TransOptGroupBox.Controls.Add(this.TransOptSendRandom);
-            this.TransOptGroupBox.Location = new System.Drawing.Point(309, 39);
+            this.TransOptGroupBox.Location = new System.Drawing.Point(324, 39);
             this.TransOptGroupBox.Name = "TransOptGroupBox";
             this.TransOptGroupBox.Size = new System.Drawing.Size(185, 67);
             this.TransOptGroupBox.TabIndex = 5;
@@ -157,16 +167,17 @@
             this.StartStat.Name = "StartStat";
             this.StartStat.Size = new System.Drawing.Size(98, 23);
             this.StartStat.TabIndex = 6;
-            this.StartStat.Text = "Start Statistics";
+            this.StartStat.Text = "Get Statistics";
             this.StartStat.UseVisualStyleBackColor = true;
+            this.StartStat.Click += new System.EventHandler(this.StartStat_Click);
             // 
             // SurveyTextBox
             // 
             this.SurveyTextBox.Location = new System.Drawing.Point(12, 38);
             this.SurveyTextBox.Name = "SurveyTextBox";
-            this.SurveyTextBox.Size = new System.Drawing.Size(149, 96);
+            this.SurveyTextBox.Size = new System.Drawing.Size(113, 96);
             this.SurveyTextBox.TabIndex = 7;
-            this.SurveyTextBox.Text = "A =\nB =\nC =\nD =\nE =\nF =";
+            this.SurveyTextBox.Text = "Total: 0\nPopular answer: 1\n";
             // 
             // StopStats
             // 
@@ -176,6 +187,7 @@
             this.StopStats.TabIndex = 8;
             this.StopStats.Text = "Stop Statistics";
             this.StopStats.UseVisualStyleBackColor = true;
+            this.StopStats.Visible = false;
             // 
             // RefreshStat
             // 
@@ -185,6 +197,7 @@
             this.RefreshStat.TabIndex = 9;
             this.RefreshStat.Text = "Refresh";
             this.RefreshStat.UseVisualStyleBackColor = true;
+            this.RefreshStat.Click += new System.EventHandler(this.RefreshStat_Click);
             // 
             // SaveAndRefreshStat
             // 
@@ -197,12 +210,13 @@
             // 
             // AnswerHighStat
             // 
-            this.AnswerHighStat.Location = new System.Drawing.Point(167, 69);
+            this.AnswerHighStat.Location = new System.Drawing.Point(139, 39);
             this.AnswerHighStat.Name = "AnswerHighStat";
             this.AnswerHighStat.Size = new System.Drawing.Size(75, 41);
             this.AnswerHighStat.TabIndex = 11;
             this.AnswerHighStat.Text = "Answer\r\nHighest";
             this.AnswerHighStat.UseVisualStyleBackColor = true;
+            this.AnswerHighStat.Click += new System.EventHandler(this.AnswerHighStat_Click);
             // 
             // AnswerGroupBox
             // 
@@ -222,7 +236,7 @@
             this.AnswerGroupBox.Controls.Add(this.AnswerC);
             this.AnswerGroupBox.Controls.Add(this.AnswerB);
             this.AnswerGroupBox.Controls.Add(this.AnswerA);
-            this.AnswerGroupBox.Location = new System.Drawing.Point(350, 112);
+            this.AnswerGroupBox.Location = new System.Drawing.Point(365, 112);
             this.AnswerGroupBox.Name = "AnswerGroupBox";
             this.AnswerGroupBox.Size = new System.Drawing.Size(102, 231);
             this.AnswerGroupBox.TabIndex = 12;
@@ -405,31 +419,141 @@
             this.AnswerA.Text = "A";
             this.AnswerA.UseVisualStyleBackColor = true;
             // 
-            // UseDefaultMAC
+            // UseDefaultMACCheckBox
             // 
-            this.UseDefaultMAC.AutoSize = true;
-            this.UseDefaultMAC.Location = new System.Drawing.Point(571, 15);
-            this.UseDefaultMAC.Name = "UseDefaultMAC";
-            this.UseDefaultMAC.Size = new System.Drawing.Size(108, 17);
-            this.UseDefaultMAC.TabIndex = 13;
-            this.UseDefaultMAC.Text = "Use Default MAC";
-            this.UseDefaultMAC.UseVisualStyleBackColor = true;
+            this.UseDefaultMACCheckBox.AutoSize = true;
+            this.UseDefaultMACCheckBox.Location = new System.Drawing.Point(571, 15);
+            this.UseDefaultMACCheckBox.Name = "UseDefaultMACCheckBox";
+            this.UseDefaultMACCheckBox.Size = new System.Drawing.Size(108, 17);
+            this.UseDefaultMACCheckBox.TabIndex = 13;
+            this.UseDefaultMACCheckBox.Text = "Use Default MAC";
+            this.UseDefaultMACCheckBox.UseVisualStyleBackColor = true;
             // 
-            // DefaultMACAddress
+            // DefaultMACAddressTextBox
             // 
-            this.DefaultMACAddress.Location = new System.Drawing.Point(554, 38);
-            this.DefaultMACAddress.Name = "DefaultMACAddress";
-            this.DefaultMACAddress.Size = new System.Drawing.Size(142, 20);
-            this.DefaultMACAddress.TabIndex = 14;
-            this.DefaultMACAddress.Text = "ABCDEF";
+            this.DefaultMACAddressTextBox.Location = new System.Drawing.Point(554, 38);
+            this.DefaultMACAddressTextBox.Name = "DefaultMACAddressTextBox";
+            this.DefaultMACAddressTextBox.Size = new System.Drawing.Size(142, 20);
+            this.DefaultMACAddressTextBox.TabIndex = 14;
+            this.DefaultMACAddressTextBox.Text = "ABCDEF";
+            // 
+            // MACRemoveFromList
+            // 
+            this.MACRemoveFromList.Location = new System.Drawing.Point(524, 93);
+            this.MACRemoveFromList.Name = "MACRemoveFromList";
+            this.MACRemoveFromList.Size = new System.Drawing.Size(90, 25);
+            this.MACRemoveFromList.TabIndex = 15;
+            this.MACRemoveFromList.Text = "remove MACs";
+            this.MACRemoveFromList.UseVisualStyleBackColor = true;
+            this.MACRemoveFromList.Click += new System.EventHandler(this.MACRemoveFromList_Click);
+            // 
+            // JamButton
+            // 
+            this.JamButton.Location = new System.Drawing.Point(139, 93);
+            this.JamButton.Name = "JamButton";
+            this.JamButton.Size = new System.Drawing.Size(64, 25);
+            this.JamButton.TabIndex = 16;
+            this.JamButton.Text = "Jam";
+            this.JamButton.UseVisualStyleBackColor = true;
+            this.JamButton.Click += new System.EventHandler(this.JamButton_Click);
+            // 
+            // ComPortToUse
+            // 
+            this.ComPortToUse.Location = new System.Drawing.Point(234, 39);
+            this.ComPortToUse.Name = "ComPortToUse";
+            this.ComPortToUse.Size = new System.Drawing.Size(70, 20);
+            this.ComPortToUse.TabIndex = 20;
+            this.ComPortToUse.TextChanged += new System.EventHandler(this.ComPortToUse_TextChanged);
+            // 
+            // CommPortLabel
+            // 
+            this.CommPortLabel.AutoSize = true;
+            this.CommPortLabel.Location = new System.Drawing.Point(236, 23);
+            this.CommPortLabel.Name = "CommPortLabel";
+            this.CommPortLabel.Size = new System.Drawing.Size(55, 13);
+            this.CommPortLabel.TabIndex = 21;
+            this.CommPortLabel.Text = "CommPort";
+            // 
+            // warningBox
+            // 
+            this.warningOutputBox.Location = new System.Drawing.Point(12, 236);
+            this.warningOutputBox.Multiline = true;
+            this.warningOutputBox.Name = "warningBox";
+            this.warningOutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.warningOutputBox.Size = new System.Drawing.Size(321, 314);
+            this.warningOutputBox.TabIndex = 22;
+            // 
+            // consoleTextBox
+            // 
+            this.consoleTextBox.Location = new System.Drawing.Point(12, 197);
+            this.consoleTextBox.Name = "consoleTextBox";
+            this.consoleTextBox.Size = new System.Drawing.Size(249, 20);
+            this.consoleTextBox.TabIndex = 23;
+            this.consoleTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.consoleTextBox_KeyUp);
+            // 
+            // consoleEnter
+            // 
+            this.consoleEnter.Location = new System.Drawing.Point(267, 194);
+            this.consoleEnter.Name = "consoleEnter";
+            this.consoleEnter.Size = new System.Drawing.Size(75, 23);
+            this.consoleEnter.TabIndex = 24;
+            this.consoleEnter.Text = "Enter";
+            this.consoleEnter.UseVisualStyleBackColor = true;
+            this.consoleEnter.Click += new System.EventHandler(this.consoleEnter_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 181);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 13);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "console Input";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 220);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(99, 13);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "warning/output box";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(236, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 13);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "Channel";
+            // 
+            // channelTextBox
+            // 
+            this.channelTextBox.Location = new System.Drawing.Point(234, 78);
+            this.channelTextBox.Name = "channelTextBox";
+            this.channelTextBox.Size = new System.Drawing.Size(70, 20);
+            this.channelTextBox.TabIndex = 28;
+            this.channelTextBox.Leave += new System.EventHandler(this.channelTextBox_Leave);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 362);
-            this.Controls.Add(this.DefaultMACAddress);
-            this.Controls.Add(this.UseDefaultMAC);
+            this.ClientSize = new System.Drawing.Size(734, 562);
+            this.Controls.Add(this.channelTextBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.consoleEnter);
+            this.Controls.Add(this.consoleTextBox);
+            this.Controls.Add(this.warningOutputBox);
+            this.Controls.Add(this.CommPortLabel);
+            this.Controls.Add(this.ComPortToUse);
+            this.Controls.Add(this.JamButton);
+            this.Controls.Add(this.MACRemoveFromList);
+            this.Controls.Add(this.DefaultMACAddressTextBox);
+            this.Controls.Add(this.UseDefaultMACCheckBox);
             this.Controls.Add(this.AnswerGroupBox);
             this.Controls.Add(this.AnswerHighStat);
             this.Controls.Add(this.SaveAndRefreshStat);
@@ -487,8 +611,19 @@
         private System.Windows.Forms.RadioButton AnswerC;
         private System.Windows.Forms.RadioButton AnswerB;
         private System.Windows.Forms.RadioButton AnswerA;
-        private System.Windows.Forms.CheckBox UseDefaultMAC;
-        private System.Windows.Forms.TextBox DefaultMACAddress;
+        private System.Windows.Forms.CheckBox UseDefaultMACCheckBox;
+        private System.Windows.Forms.TextBox DefaultMACAddressTextBox;
+        private System.Windows.Forms.Button MACRemoveFromList;
+        private System.Windows.Forms.Button JamButton;
+        private System.Windows.Forms.TextBox ComPortToUse;
+        private System.Windows.Forms.Label CommPortLabel;
+        private System.Windows.Forms.TextBox warningOutputBox;
+        private System.Windows.Forms.TextBox consoleTextBox;
+        private System.Windows.Forms.Button consoleEnter;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox channelTextBox;
     }
 }
 
