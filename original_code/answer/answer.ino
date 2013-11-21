@@ -27,6 +27,9 @@ byte clickerMasterMAC[MAC_SIZE] = { 0x56, 0x34, 0x12 };
 byte myMAC[MAC_SIZE] = { 0x99, 0x88, 0x77 };
 byte oppositeMyMAC[MAC_SIZE] = { 0x77, 0x88, 0x99 };
 
+//Specify mac address to send answer for.
+byte bMac[MAC_SIZE] = {0x00, 0x01, 0x02};
+
 struct {
   byte MAC[MAC_SIZE];
   byte answer[DATA_SIZE];
@@ -65,6 +68,7 @@ void setup() {
 
 void serialEvent(){
   byte readByte;
+  int index;
   
   while(Serial.available()){
     readByte = Serial.read();
@@ -123,6 +127,27 @@ void serialEvent(){
     } else if (readByte == 'j'){
       trigger = 'j';
       jammer();
+    } else if (readByte == 'b'){
+      byte inputMac[MAC_SIZE];
+      index = 0;
+      memset(bMac, 0, MAC_SIZE);
+      do{
+        while(!Serial.available()); //block until available
+        readByte = Serial.read();
+        
+        if (index == 3){
+          answer = readByte;
+        }else{
+          inputMac[index] = readByte;
+        }
+        index += 1;
+      }while(readByte != '.');
+      //Now that we have our mac address and answer
+      //Copy it to bMac and initiate massSendAsClickerStart
+      //(following practice from parsing 's' above. Also added trigger b in loop code)
+      memcpy(bMac,inputMac,MAC_SIZE);
+      massSendAsClickerStart();
+      trigger = 'b';
     }
   }
 }
@@ -160,6 +185,13 @@ void loop() {
     PRINT_STRING(FinSingle);
     receiveAsClickerMasterStart();
   } 
+  //Basically mimic trigger = 's', but for bMac
+  else if(trigger == 'b')
+  {
+    repeatSendPacket(bMac, &answer);
+    PRINT_STRING(FinSingle);
+    receiveAsClickerMasterStart();
+  }
   
   if(trigger == 0){
     while(digitalRead(IRQ) == LOW){

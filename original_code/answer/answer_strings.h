@@ -51,6 +51,7 @@ prog_char Help[][50] PROGMEM = {  "---------------------------------------------
                                   "  d - Do not Auto-Answer Questions              \n",
                                   "  p - Display the recorded MACs                 \n",
                                   "  j - Send out a constant carrier               \n",
+                                  "  b####. - Specify mac address and answer       \n",
                                   "                                                \n",
                                   "  Ex: c4m;c1s                                   \n",
                                   "        -All clickers send out '4' as answer    \n",
