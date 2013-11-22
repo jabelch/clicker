@@ -3,17 +3,17 @@
 #include "macList.h"
 #include "answer_strings.h"
 
-/* //NANO SETTINGS
+ //NANO SETTINGS
 #define CSN 10
 #define CE 9
 #define IRQ 8
-*/
 
+/*
 //MEGA SETTINGS
 #define CSN 53
 #define CE 42
 #define IRQ 41
-
+*/
 #define MAX_RECORDS 150
 #define MAC_SIZE 3
 #define DATA_SIZE 1
@@ -146,6 +146,15 @@ void serialEvent(){
       //Copy it to bMac and initiate massSendAsClickerStart
       //(following practice from parsing 's' above. Also added trigger b in loop code)
       memcpy(bMac,inputMac,MAC_SIZE);
+      
+      Serial.print("MAC Received (in hex): ");
+      int digit;
+      for(int j = 0; j < MAC_SIZE; j++){
+        digit = (int)bMac[j];
+        sprintf(string, STRING(MacsFormat), digit);
+        Serial.print(string);
+      }
+      
       massSendAsClickerStart();
       trigger = 'b';
     }
