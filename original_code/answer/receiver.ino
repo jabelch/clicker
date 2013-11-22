@@ -52,9 +52,27 @@ void compileStats(){
 
 void recordAnswer(){
   byte buf[PACKET_SIZE];
+  int digit;
+  char answer;
   
   digitalSpiRead(R_RX_PAYLOAD, buf, PACKET_SIZE);
   digitalSpiWrite(W_REGISTER | STATUS, 0x70);    // Clear interrupts
+  
+  //Add a wrapper for the mac address and answer
+  Serial.print("<mac>");
+  
+  //Print out the mac address in a nice format
+  for(int i = 0; i < MAC_SIZE; i++){
+    digit = (int)buf[i];
+    sprintf(string, STRING(MacsFormat), digit);
+    Serial.print(string);
+  } 
+  //Print out the answer
+  answer = (char)buf[3];
+  Serial.print(answer);
+  //And finally close off the tag
+  Serial.println("</mac>");
+  
   for(int i = 0; i < numAnswers; i++){
     if(memcmp(buf, record[i].MAC, MAC_SIZE) == 0){
       memcpy(record[i].answer, buf+MAC_SIZE, DATA_SIZE);

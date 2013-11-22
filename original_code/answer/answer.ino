@@ -131,11 +131,12 @@ void serialEvent(){
       byte inputMac[MAC_SIZE];
       index = 0;
       memset(bMac, 0, MAC_SIZE);
+      char hex = 0;
       do{
         while(!Serial.available()); //block until available
         readByte = Serial.read();
         
-        if (index == 3){
+        if (index == 6){
           answer = readByte;
         }else{
           inputMac[index] = readByte;

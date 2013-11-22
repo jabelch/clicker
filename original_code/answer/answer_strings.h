@@ -19,7 +19,7 @@ prog_char RegistersN[] PROGMEM = "</registers>\n";
 
 prog_char Macs[] PROGMEM = "<macs>\n";
 prog_char MacsN[] PROGMEM = "</macs>\n";
-prog_char MacsFormat[] PROGMEM = "%02X ";
+prog_char MacsFormat[] PROGMEM = "%02X";
 prog_char Stats[] PROGMEM = "<stats>\n";
 prog_char StatFormat[] PROGMEM = "%c: %3hu - ";
 prog_char Percent[] PROGMEM = "%\n";
