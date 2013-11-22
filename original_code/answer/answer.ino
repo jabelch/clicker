@@ -132,29 +132,34 @@ void serialEvent(){
       index = 0;
       memset(bMac, 0, MAC_SIZE);
       char hex = 0;
+      char buf[] = {'0', 'x', '0', '0', 0}; //Null terminated string buffer
       do{
         while(!Serial.available()); //block until available
         readByte = Serial.read();
-        
-        if (index == 6){
+ 
+        if (index == 3){
           answer = readByte;
         }else{
-          inputMac[index] = readByte;
+          buf[2] = readByte;
+          while(!Serial.available());
+          buf[3] = Serial.read();
+          inputMac[index] = strtol(buf, NULL, 0);
         }
         index += 1;
-      }while(readByte != '.');
+      }while(index < 4);
       //Now that we have our mac address and answer
       //Copy it to bMac and initiate massSendAsClickerStart
       //(following practice from parsing 's' above. Also added trigger b in loop code)
       memcpy(bMac,inputMac,MAC_SIZE);
       
-      Serial.print("MAC Received (in hex): ");
+      Serial.print("Received MAC: ");
       int digit;
       for(int j = 0; j < MAC_SIZE; j++){
         digit = (int)bMac[j];
         sprintf(string, STRING(MacsFormat), digit);
         Serial.print(string);
       }
+      Serial.println();
       
       massSendAsClickerStart();
       trigger = 'b';
