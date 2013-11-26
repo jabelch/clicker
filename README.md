@@ -9,6 +9,14 @@ and responsible decisions with security in mind.
 - Example Clicker:
 http://www.turningtechnologies.com/response-solutions/responsecard-rf-lcd
 
+While our current setup might seem focused and inaccessible to the majority of the public, 
+this is just a simple demonstration of what can be done with some cheap hardware. 
+
+We opted to use an Arduino given the previous research that was done. Given enough motivation, however,
+another possible solution could be architected using a Raspberry Pi in conjunction with a phone, or possibly just
+a phone with bluetooth thus eliminating the need for a larger laptop. 
+Using such a setup could could be undetectable and would thwart a security response that restricts the use of laptops.
+
 
 ###Hardware Requirements
 - nRF24L01 Wireless Module:
@@ -18,6 +26,17 @@ Using an Arduino to control the nRF24L01
 - Arduino Mega (other models may require tweeking): http://arduino.cc/en/Main/arduinoBoardMega
 - Arduino Software: http://arduino.cc/en/Main/Software
 
+
+###Getting Started
+- Install the Arduino Software
+- Open 'answer.ino' and verify CSN, CE, and IRQ definitions.  Change these to your liking or particular setup.
+- Connect your wireless module according to the definitions.  Remember, MOSI -> MOSI; MISO -> MISO.
+- Compile and upload to your Arduino
+
+###Connecting
+- You can either use the serial monitor built in the Arduino Software, or another serial program like putty.
+- Verify COM port.  Set connection speed to 115200
+- If you use putty on Windows, you will need to specify 'Implicit CR in every LF' found in 'Terminal'.
 
 ###Previous research
 - Original Reverse Engineer:
