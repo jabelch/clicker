@@ -171,6 +171,8 @@ void serialEvent(){
       
       massSendAsClickerStart();
       trigger = 'b';
+    } else if (readByte == 'l'){
+       trigger = 'l'; //Runs the scan routine from loop 
     }
   }
 }
@@ -184,7 +186,39 @@ void loop() {
   byte tmp;
   unsigned long tmp_time;
   
-  if(trigger == 'r')
+  //SCAN CHANNELS
+  if (trigger == 'l'){
+    unsigned long start_time;
+    unsigned long curr_time;
+    unsigned long timeout; 
+    byte found_channel;
+    found_channel = 0;
+    
+    Serial.println("Scanning For Channels");
+    //Scan a bunch of times or until we found a channel
+    for(byte scan = 0; scan < 10 && found_channel == 0; scan++){
+      //Loop through 85 channels
+      for(byte i = 1; i < 85 && found_channel == 0; i++){
+        start_time = millis();
+        curr_time = start_time;
+        timeout = 10;
+        scanChannels(i);
+        //Block here until IRQ line goes low (receiving) OR we hit timeout
+        while(digitalRead(IRQ) == HIGH && curr_time - start_time <= timeout){
+          curr_time = millis();
+        }
+        if(digitalRead(IRQ) == LOW){
+          found_channel = channel;
+          trigger = 0;
+          Serial.println("<channel>");
+          Serial.println(channel);
+          Serial.println("</channel>");
+        }
+      }
+    }
+    Serial.println("Stopped Scanning");
+  }
+  else if(trigger == 'r')
   {
     for(int i = 0; i < NUM_MACS; i++){
       tmp = (rand() % 10) + '0';

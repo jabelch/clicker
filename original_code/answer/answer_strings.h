@@ -52,6 +52,7 @@ prog_char Help[][50] PROGMEM = {  "---------------------------------------------
                                   "  p - Display the recorded MACs                 \n",
                                   "  j - Send out a constant carrier               \n",
                                   "  b######A. - Specify mac address and answer    \n",
+                                  "  l - Scan for channel (and set when found)     \n",
                                   "                                                \n",
                                   "  Ex: c4m;c1s                                   \n",
                                   "        -All clickers send out '4' as answer    \n",
