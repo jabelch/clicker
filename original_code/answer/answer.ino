@@ -3,17 +3,25 @@
 #include "macList.h"
 #include "answer_strings.h"
 
- //NANO SETTINGS
+#define TYPE 0 //NANO
+//#define TYPE 1 //MEGA
+
+#if TYPE == 0
+//NANO SETTINGS
+//MOSI 11, MISO 12, SCK 13 (see data sheet)
 #define CSN 10
 #define CE 9
 #define IRQ 8
 
-/*
+#elif TYPE == 1
+
 //MEGA SETTINGS
 #define CSN 53
 #define CE 42
 #define IRQ 41
-*/
+
+#endif
+
 #define MAX_RECORDS 150
 #define MAC_SIZE 3
 #define DATA_SIZE 1
