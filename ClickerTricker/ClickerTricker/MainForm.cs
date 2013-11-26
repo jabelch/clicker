@@ -120,7 +120,17 @@ namespace ClickerTricker
 
         private void MACRemoveFromList_Click(object sender, EventArgs e)
         {
-            //remove the stuff from the list if selected
+            //get a list of all the checked items in the list box.
+            CheckedListBox.CheckedItemCollection checkedItems = MACListBox.CheckedItems;
+            
+            //for the number of times that it exists remove each one.  The object is linked back to the MACListBox 
+            // so as you remove them the count of the box also decrements.  This is why we only tell it to remove the first
+            // one each time for the total number of times instead of trying to remove them at index 0, 1, 2, 3, etc...
+            int numberOfMACsToRemove = checkedItems.Count;
+            for(int i = 0; i < numberOfMACsToRemove ; i++)
+            {
+                MACListBox.Items.Remove(checkedItems[0]);
+            }
         }
 
         private void JamButton_Click(object sender, EventArgs e)
@@ -181,35 +191,37 @@ namespace ClickerTricker
         //parse from the returned data what are the new MACs to add to our list
         private void ScanForMACs_Click(object sender, EventArgs e)
         {
+            if (!tricker.IsOpen)
+            {
+                warningOutputBox.Text = "tricker is not open right now";
+                return;
+
+            }
             tricker.Write("p.");
             Thread.Sleep(100);
             //System.Console.Write(tricker.ReadExisting());
 
             string MacString = tricker.ReadExisting();
+            string[] test = MacString.Split('\n', '<', '>');
 
-            //while MACS are still in the string of returned characters find the MAC at the start and parse it out
-            //afterwards remove the MAC from the string and search again.
-            //if the MAC found is not already in the list of macs then add it.
-            while (MacString.Length > 0)
+            foreach(string currentMAC in test)
             {
-                int startPos = MacString.IndexOf("<MAC>");
-                int endPos = MacString.IndexOf("</MAC>");
-                if (endPos < 0 || startPos < 0)
+                if (!currentMAC.Equals("") && !currentMAC.Contains("m") && !currentMAC.Contains("/m"))
                 {
-                    break;
+                    try
+                    {
+                        string tempMac = currentMAC.Substring(0, 6);
+                        if (MACListBox.Items.Contains(tempMac) == false)
+                        {
+                            MACListBox.Items.Add(tempMac);
+                            MACListBox.Sorted = true;
+                        }
+                    }
+                    catch
+                    {
+                        //length wasn't long enough
+                    }
                 }
-                int numOfMACHex = 6;
-
-                //the plus 5 is for getting past the <MAC> in the substring positions
-                string currentMAC = MacString.Substring(startPos+5,numOfMACHex);
-
-                //add to the list if it is not already there
-                if (MACListBox.Items.Contains(currentMAC) == false)
-                {
-                    MACListBox.Items.Add(currentMAC);
-                    MACListBox.Sorted = true;
-                }
-                MacString.Remove(0, endPos);
             }
         }
 
