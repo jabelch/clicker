@@ -43,11 +43,6 @@
             this.SaveAndRefreshStat = new System.Windows.Forms.Button();
             this.AnswerHighStat = new System.Windows.Forms.Button();
             this.AnswerGroupBox = new System.Windows.Forms.GroupBox();
-            this.Answer9 = new System.Windows.Forms.RadioButton();
-            this.Answer8 = new System.Windows.Forms.RadioButton();
-            this.Answer7 = new System.Windows.Forms.RadioButton();
-            this.Answer6 = new System.Windows.Forms.RadioButton();
-            this.Answer5 = new System.Windows.Forms.RadioButton();
             this.Answer4 = new System.Windows.Forms.RadioButton();
             this.Answer3 = new System.Windows.Forms.RadioButton();
             this.Answer2 = new System.Windows.Forms.RadioButton();
@@ -72,6 +67,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.channelTextBox = new System.Windows.Forms.TextBox();
+            this.randomAnswerTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.TransOptGroupBox.SuspendLayout();
             this.AnswerGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -181,12 +178,13 @@
             // 
             // StopStats
             // 
+            this.StopStats.BackColor = System.Drawing.SystemColors.Control;
             this.StopStats.Location = new System.Drawing.Point(116, 9);
             this.StopStats.Name = "StopStats";
             this.StopStats.Size = new System.Drawing.Size(98, 23);
             this.StopStats.TabIndex = 8;
             this.StopStats.Text = "Stop Statistics";
-            this.StopStats.UseVisualStyleBackColor = true;
+            this.StopStats.UseVisualStyleBackColor = false;
             this.StopStats.Visible = false;
             // 
             // RefreshStat
@@ -216,15 +214,11 @@
             this.AnswerHighStat.TabIndex = 11;
             this.AnswerHighStat.Text = "Answer\r\nHighest";
             this.AnswerHighStat.UseVisualStyleBackColor = true;
+            this.AnswerHighStat.Visible = false;
             this.AnswerHighStat.Click += new System.EventHandler(this.AnswerHighStat_Click);
             // 
             // AnswerGroupBox
             // 
-            this.AnswerGroupBox.Controls.Add(this.Answer9);
-            this.AnswerGroupBox.Controls.Add(this.Answer8);
-            this.AnswerGroupBox.Controls.Add(this.Answer7);
-            this.AnswerGroupBox.Controls.Add(this.Answer6);
-            this.AnswerGroupBox.Controls.Add(this.Answer5);
             this.AnswerGroupBox.Controls.Add(this.Answer4);
             this.AnswerGroupBox.Controls.Add(this.Answer3);
             this.AnswerGroupBox.Controls.Add(this.Answer2);
@@ -238,119 +232,65 @@
             this.AnswerGroupBox.Controls.Add(this.AnswerA);
             this.AnswerGroupBox.Location = new System.Drawing.Point(365, 112);
             this.AnswerGroupBox.Name = "AnswerGroupBox";
-            this.AnswerGroupBox.Size = new System.Drawing.Size(102, 231);
+            this.AnswerGroupBox.Size = new System.Drawing.Size(102, 161);
             this.AnswerGroupBox.TabIndex = 12;
             this.AnswerGroupBox.TabStop = false;
             this.AnswerGroupBox.Text = "Answer To Send";
             // 
-            // Answer9
-            // 
-            this.Answer9.AutoSize = true;
-            this.Answer9.Location = new System.Drawing.Point(54, 180);
-            this.Answer9.Name = "Answer9";
-            this.Answer9.Size = new System.Drawing.Size(31, 17);
-            this.Answer9.TabIndex = 15;
-            this.Answer9.TabStop = true;
-            this.Answer9.Text = "9";
-            this.Answer9.UseVisualStyleBackColor = true;
-            // 
-            // Answer8
-            // 
-            this.Answer8.AutoSize = true;
-            this.Answer8.Location = new System.Drawing.Point(54, 157);
-            this.Answer8.Name = "Answer8";
-            this.Answer8.Size = new System.Drawing.Size(31, 17);
-            this.Answer8.TabIndex = 15;
-            this.Answer8.TabStop = true;
-            this.Answer8.Text = "8";
-            this.Answer8.UseVisualStyleBackColor = true;
-            // 
-            // Answer7
-            // 
-            this.Answer7.AutoSize = true;
-            this.Answer7.Location = new System.Drawing.Point(54, 134);
-            this.Answer7.Name = "Answer7";
-            this.Answer7.Size = new System.Drawing.Size(31, 17);
-            this.Answer7.TabIndex = 15;
-            this.Answer7.TabStop = true;
-            this.Answer7.Text = "7";
-            this.Answer7.UseVisualStyleBackColor = true;
-            // 
-            // Answer6
-            // 
-            this.Answer6.AutoSize = true;
-            this.Answer6.Location = new System.Drawing.Point(54, 111);
-            this.Answer6.Name = "Answer6";
-            this.Answer6.Size = new System.Drawing.Size(31, 17);
-            this.Answer6.TabIndex = 15;
-            this.Answer6.TabStop = true;
-            this.Answer6.Text = "6";
-            this.Answer6.UseVisualStyleBackColor = true;
-            // 
-            // Answer5
-            // 
-            this.Answer5.AutoSize = true;
-            this.Answer5.Location = new System.Drawing.Point(54, 88);
-            this.Answer5.Name = "Answer5";
-            this.Answer5.Size = new System.Drawing.Size(31, 17);
-            this.Answer5.TabIndex = 14;
-            this.Answer5.TabStop = true;
-            this.Answer5.Text = "5";
-            this.Answer5.UseVisualStyleBackColor = true;
-            // 
             // Answer4
             // 
             this.Answer4.AutoSize = true;
-            this.Answer4.Location = new System.Drawing.Point(54, 65);
+            this.Answer4.Location = new System.Drawing.Point(50, 111);
             this.Answer4.Name = "Answer4";
             this.Answer4.Size = new System.Drawing.Size(31, 17);
             this.Answer4.TabIndex = 14;
             this.Answer4.TabStop = true;
-            this.Answer4.Text = "4";
+            this.Answer4.Text = "?";
             this.Answer4.UseVisualStyleBackColor = true;
             // 
             // Answer3
             // 
             this.Answer3.AutoSize = true;
-            this.Answer3.Location = new System.Drawing.Point(54, 42);
+            this.Answer3.Location = new System.Drawing.Point(50, 88);
             this.Answer3.Name = "Answer3";
-            this.Answer3.Size = new System.Drawing.Size(31, 17);
+            this.Answer3.Size = new System.Drawing.Size(38, 17);
             this.Answer3.TabIndex = 14;
             this.Answer3.TabStop = true;
-            this.Answer3.Text = "3";
+            this.Answer3.Text = "0/j";
             this.Answer3.UseVisualStyleBackColor = true;
             // 
             // Answer2
             // 
             this.Answer2.AutoSize = true;
-            this.Answer2.Location = new System.Drawing.Point(54, 19);
+            this.Answer2.Location = new System.Drawing.Point(50, 65);
             this.Answer2.Name = "Answer2";
-            this.Answer2.Size = new System.Drawing.Size(31, 17);
+            this.Answer2.Size = new System.Drawing.Size(38, 17);
             this.Answer2.TabIndex = 14;
             this.Answer2.TabStop = true;
-            this.Answer2.Text = "2";
+            this.Answer2.Text = "9/i";
             this.Answer2.UseVisualStyleBackColor = true;
             // 
             // Answer1
             // 
             this.Answer1.AutoSize = true;
-            this.Answer1.Location = new System.Drawing.Point(6, 180);
+            this.Answer1.Location = new System.Drawing.Point(50, 42);
             this.Answer1.Name = "Answer1";
-            this.Answer1.Size = new System.Drawing.Size(31, 17);
+            this.Answer1.Size = new System.Drawing.Size(42, 17);
             this.Answer1.TabIndex = 18;
             this.Answer1.TabStop = true;
-            this.Answer1.Text = "1";
+            this.Answer1.Text = "8/h";
             this.Answer1.UseVisualStyleBackColor = true;
             // 
             // Answer0
             // 
             this.Answer0.AutoSize = true;
-            this.Answer0.Location = new System.Drawing.Point(6, 157);
+            this.Answer0.Location = new System.Drawing.Point(50, 19);
             this.Answer0.Name = "Answer0";
-            this.Answer0.Size = new System.Drawing.Size(31, 17);
+            this.Answer0.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Answer0.Size = new System.Drawing.Size(42, 17);
             this.Answer0.TabIndex = 13;
             this.Answer0.TabStop = true;
-            this.Answer0.Text = "0";
+            this.Answer0.Text = "7/g";
             this.Answer0.UseVisualStyleBackColor = true;
             // 
             // AnswerF
@@ -358,10 +298,10 @@
             this.AnswerF.AutoSize = true;
             this.AnswerF.Location = new System.Drawing.Point(6, 134);
             this.AnswerF.Name = "AnswerF";
-            this.AnswerF.Size = new System.Drawing.Size(31, 17);
+            this.AnswerF.Size = new System.Drawing.Size(39, 17);
             this.AnswerF.TabIndex = 17;
             this.AnswerF.TabStop = true;
-            this.AnswerF.Text = "F";
+            this.AnswerF.Text = "6/f";
             this.AnswerF.UseVisualStyleBackColor = true;
             // 
             // AnswerE
@@ -369,10 +309,10 @@
             this.AnswerE.AutoSize = true;
             this.AnswerE.Location = new System.Drawing.Point(6, 111);
             this.AnswerE.Name = "AnswerE";
-            this.AnswerE.Size = new System.Drawing.Size(32, 17);
+            this.AnswerE.Size = new System.Drawing.Size(42, 17);
             this.AnswerE.TabIndex = 16;
             this.AnswerE.TabStop = true;
-            this.AnswerE.Text = "E";
+            this.AnswerE.Text = "5/e";
             this.AnswerE.UseVisualStyleBackColor = true;
             // 
             // AnswerD
@@ -380,10 +320,10 @@
             this.AnswerD.AutoSize = true;
             this.AnswerD.Location = new System.Drawing.Point(6, 88);
             this.AnswerD.Name = "AnswerD";
-            this.AnswerD.Size = new System.Drawing.Size(33, 17);
+            this.AnswerD.Size = new System.Drawing.Size(42, 17);
             this.AnswerD.TabIndex = 15;
             this.AnswerD.TabStop = true;
-            this.AnswerD.Text = "D";
+            this.AnswerD.Text = "4/d";
             this.AnswerD.UseVisualStyleBackColor = true;
             // 
             // AnswerC
@@ -391,10 +331,10 @@
             this.AnswerC.AutoSize = true;
             this.AnswerC.Location = new System.Drawing.Point(6, 65);
             this.AnswerC.Name = "AnswerC";
-            this.AnswerC.Size = new System.Drawing.Size(32, 17);
+            this.AnswerC.Size = new System.Drawing.Size(42, 17);
             this.AnswerC.TabIndex = 14;
             this.AnswerC.TabStop = true;
-            this.AnswerC.Text = "C";
+            this.AnswerC.Text = "3/c";
             this.AnswerC.UseVisualStyleBackColor = true;
             // 
             // AnswerB
@@ -402,10 +342,10 @@
             this.AnswerB.AutoSize = true;
             this.AnswerB.Location = new System.Drawing.Point(6, 42);
             this.AnswerB.Name = "AnswerB";
-            this.AnswerB.Size = new System.Drawing.Size(32, 17);
+            this.AnswerB.Size = new System.Drawing.Size(42, 17);
             this.AnswerB.TabIndex = 13;
             this.AnswerB.TabStop = true;
-            this.AnswerB.Text = "B";
+            this.AnswerB.Text = "2/b";
             this.AnswerB.UseVisualStyleBackColor = true;
             // 
             // AnswerA
@@ -413,10 +353,10 @@
             this.AnswerA.AutoSize = true;
             this.AnswerA.Location = new System.Drawing.Point(6, 19);
             this.AnswerA.Name = "AnswerA";
-            this.AnswerA.Size = new System.Drawing.Size(32, 17);
+            this.AnswerA.Size = new System.Drawing.Size(42, 17);
             this.AnswerA.TabIndex = 0;
             this.AnswerA.TabStop = true;
-            this.AnswerA.Text = "A";
+            this.AnswerA.Text = "1/a";
             this.AnswerA.UseVisualStyleBackColor = true;
             // 
             // UseDefaultMACCheckBox
@@ -474,11 +414,11 @@
             this.CommPortLabel.TabIndex = 21;
             this.CommPortLabel.Text = "CommPort";
             // 
-            // warningBox
+            // warningOutputBox
             // 
             this.warningOutputBox.Location = new System.Drawing.Point(12, 236);
             this.warningOutputBox.Multiline = true;
-            this.warningOutputBox.Name = "warningBox";
+            this.warningOutputBox.Name = "warningOutputBox";
             this.warningOutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.warningOutputBox.Size = new System.Drawing.Size(321, 314);
             this.warningOutputBox.TabIndex = 22;
@@ -536,11 +476,30 @@
             this.channelTextBox.TabIndex = 28;
             this.channelTextBox.Leave += new System.EventHandler(this.channelTextBox_Leave);
             // 
+            // randomAnswerTextBox
+            // 
+            this.randomAnswerTextBox.Location = new System.Drawing.Point(365, 313);
+            this.randomAnswerTextBox.Name = "randomAnswerTextBox";
+            this.randomAnswerTextBox.Size = new System.Drawing.Size(100, 20);
+            this.randomAnswerTextBox.TabIndex = 29;
+            this.randomAnswerTextBox.Text = "abcdefghij";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(368, 297);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(125, 13);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "Random Answer choices";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 562);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.randomAnswerTextBox);
             this.Controls.Add(this.channelTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -595,11 +554,6 @@
         private System.Windows.Forms.Button SaveAndRefreshStat;
         private System.Windows.Forms.Button AnswerHighStat;
         private System.Windows.Forms.GroupBox AnswerGroupBox;
-        private System.Windows.Forms.RadioButton Answer9;
-        private System.Windows.Forms.RadioButton Answer8;
-        private System.Windows.Forms.RadioButton Answer7;
-        private System.Windows.Forms.RadioButton Answer6;
-        private System.Windows.Forms.RadioButton Answer5;
         private System.Windows.Forms.RadioButton Answer4;
         private System.Windows.Forms.RadioButton Answer3;
         private System.Windows.Forms.RadioButton Answer2;
@@ -624,6 +578,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox channelTextBox;
+        private System.Windows.Forms.TextBox randomAnswerTextBox;
+        private System.Windows.Forms.Label label5;
     }
 }
 

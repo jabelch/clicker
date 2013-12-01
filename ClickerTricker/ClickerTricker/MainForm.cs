@@ -57,6 +57,14 @@ namespace ClickerTricker
                     MACListBox.SetItemCheckState(i, CheckState.Checked);
                 }
             }
+
+            string test = "";
+            foreach (string mac in MACListBox.Items)
+            {
+                test += "\n\r " + mac;
+            }
+            int num = MACListBox.Items.Count;
+            warningOutputBox.Text = test + "\r\n number found is:" + num;
         }
 
         private void transmitMessage_Click(object sender, EventArgs e)
@@ -79,17 +87,17 @@ namespace ClickerTricker
             if (TransOptSendRandom.Checked == true)
             {
                 //create a random answer choice for specified MACs
-                Random numRandGen = new Random();
+                Random numRandGen = new Random(DateTimeOffset.Now.Minute);
 
-                string answerString = "ABCDEF1234567890";
+                string answerString = randomAnswerTextBox.Text;
 
-                string randomAnswer = "1";
+                string randomAnswer = "a";
                 //for each MAC address in the list that is checked send a randomized answer
                 foreach (object currentMAC in MACListBox.CheckedItems)
                 {
-                    //generate the random index
-                    int randomNumber = numRandGen.Next(answerString.Length);
-
+                    
+                        //generate the random index
+                        int randomNumber = numRandGen.Next(answerString.Length);
                     //pick a random answer
                     randomAnswer = answerString.Substring(randomNumber, 1);
                     tricker.Write("b" + currentMAC.ToString() + randomAnswer + ".");
@@ -105,15 +113,15 @@ namespace ClickerTricker
             {
 
                 string answer = AnswerGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Text;//  "1";
-
+                char letterAnswer = answer[answer.Length - 1];
                 // MACListBox.
                 foreach (object currentMAC in MACListBox.CheckedItems)
                 {
-                    tricker.Write("b" + currentMAC.ToString() + answer + ".");
+                    tricker.Write("b" + currentMAC.ToString() + letterAnswer + ".");
                 }
                 if (UseDefaultMACCheckBox.Checked == true)
                 {
-                    tricker.Write("b" + DefaultMACAddressTextBox.ToString() + answer + ".");
+                    tricker.Write("b" + DefaultMACAddressTextBox.ToString() + letterAnswer + ".");
                 }
             }
         }
@@ -135,7 +143,18 @@ namespace ClickerTricker
 
         private void JamButton_Click(object sender, EventArgs e)
         {
+            if (!tricker.IsOpen)
+            {
+                warningOutputBox.Text = "tricker port is not open";
+                return;
+            }
+
+            tricker.Write("j.");
+            Thread.Sleep(100);
+
+            string MacString = tricker.ReadExisting();
             //send a jamming signal
+
             
         }
 
@@ -158,6 +177,12 @@ namespace ClickerTricker
         //allows the user to directly control the arduino instead of using the interface we made.
         private void consoleEnter_Click(object sender, EventArgs e)
         {
+            if (!tricker.IsOpen)
+            {
+                warningOutputBox.Text = "clicker port not open";
+                return;
+
+            }
             //send command
             tricker.Write(consoleTextBox.Text);
             System.Threading.Thread.Sleep(500);
@@ -183,6 +208,11 @@ namespace ClickerTricker
 
         private void channelTextBox_Leave(object sender, EventArgs e)
         {
+            if (!tricker.IsOpen)
+            {
+                warningOutputBox.Text = "tricker port is not open";
+                return;
+            }
             tricker.Write("f" + channelTextBox.Text + ".");
             System.Threading.Thread.Sleep(100);
             System.Console.Write(tricker.ReadExisting());
@@ -235,15 +265,25 @@ namespace ClickerTricker
 
         private void AnswerHighStat_Click(object sender, EventArgs e)
         {
+
             //call transmit after setting it correctly to answer with what is the most popular in the stats window
         }
-
+        
         private void StartStat_Click(object sender, EventArgs e)
         {
             //get the current stats and place them in the window 
             tricker.Write("t.");
             Thread.Sleep(300);
-            SurveyTextBox.Text = tricker.ReadExisting();
+            string statsBack = tricker.ReadExisting();
+            
+            if(statsBack.Contains("<stats>"))
+            {
+                int lengthOfFrontTag = 8;
+                string reportInfo = statsBack.Substring(statsBack.IndexOf("<stats>") + lengthOfFrontTag, statsBack.IndexOf("</stats>") - (statsBack.IndexOf("<stats>") + lengthOfFrontTag));
+                reportInfo = Regex.Replace(reportInfo, "(?<!\r)\n", "\r\n");
+                SurveyTextBox.Text = reportInfo;
+            }
+            // = tricker.ReadExisting();
         }
 
     }
