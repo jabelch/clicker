@@ -101,6 +101,7 @@ namespace ClickerTricker
                     //pick a random answer
                     randomAnswer = answerString.Substring(randomNumber, 1);
                     tricker.Write("b" + currentMAC.ToString() + randomAnswer + ".");
+                    Thread.Sleep(20);
                 }
 
                 if (UseDefaultMACCheckBox.Checked == true)
@@ -113,11 +114,13 @@ namespace ClickerTricker
             {
 
                 string answer = AnswerGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Text;//  "1";
-                char letterAnswer = answer[answer.Length - 1];
+                char letterAnswer = answer[0];
                 // MACListBox.
                 foreach (object currentMAC in MACListBox.CheckedItems)
                 {
-                    tricker.Write("b" + currentMAC.ToString() + letterAnswer + ".");
+                    string mac = currentMAC.ToString();
+                    tricker.Write("b" + mac + letterAnswer + ".");
+                    Thread.Sleep(20);
                 }
                 if (UseDefaultMACCheckBox.Checked == true)
                 {

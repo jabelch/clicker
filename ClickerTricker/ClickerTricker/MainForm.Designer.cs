@@ -482,7 +482,7 @@
             this.randomAnswerTextBox.Name = "randomAnswerTextBox";
             this.randomAnswerTextBox.Size = new System.Drawing.Size(100, 20);
             this.randomAnswerTextBox.TabIndex = 29;
-            this.randomAnswerTextBox.Text = "abcdefghij";
+            this.randomAnswerTextBox.Text = "1234567890";
             // 
             // label5
             // 

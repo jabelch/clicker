@@ -53,7 +53,7 @@ void compileStats(){
 void recordAnswer(){
   byte buf[PACKET_SIZE];
   int digit;
-  char answer;
+  byte answer;
   
   digitalSpiRead(R_RX_PAYLOAD, buf, PACKET_SIZE);
   digitalSpiWrite(W_REGISTER | STATUS, 0x70);    // Clear interrupts
@@ -68,8 +68,21 @@ void recordAnswer(){
     Serial.print(string);
   } 
   //Print out the answer
-  answer = (char)buf[3];
-  Serial.print(answer);
+  //48 is 0
+  //49-57 is 1-9
+  //65-74 is A-J
+  //97-106 is a-j
+  answer = buf[3];
+  if (answer >=66 && answer <=74){//A-I
+    answer = answer-17;
+  }else if (answer == 65 || answer == 97){
+    answer = 48;
+  }else if (answer >=98 && answer <=106){
+    answer = answer-49;
+  }
+  buf[3] = answer;
+  
+  Serial.print((char)answer);
 
   //And finally close off the tag
   Serial.println("</mac>");
