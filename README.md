@@ -15,7 +15,8 @@ this is just a simple demonstration of what can be done with some cheap hardware
 We opted to use an Arduino given the previous research that was done. Given enough motivation, however,
 another possible solution could be architected using a Raspberry Pi in conjunction with a phone, or possibly just
 a phone with bluetooth thus eliminating the need for a larger laptop. 
-Using such a setup could could be undetectable and would thwart a security response that restricts the use of laptops.
+Using such a setup would be virtually undetectable and would thwart a security response that restricts the use of laptops.
+A device could even be left with an accomplice or unattended, allowing an attacker to work remotely.
 
 
 ###Hardware Requirements
