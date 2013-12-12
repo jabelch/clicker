@@ -3,8 +3,8 @@
 #include "macList.h"
 #include "answer_strings.h"
 
-#define TYPE 0 //NANO
-//#define TYPE 1 //MEGA
+//#define TYPE 0 //NANO
+#define TYPE 1 //MEGA
 
 #if TYPE == 0
 //NANO SETTINGS
@@ -22,7 +22,7 @@
 
 #endif
 
-#define MAX_RECORDS 150
+#define MAX_RECORDS 200
 #define MAC_SIZE 3
 #define DATA_SIZE 1
 #define PACKET_SIZE (MAC_SIZE + DATA_SIZE)
